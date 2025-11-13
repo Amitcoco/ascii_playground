@@ -389,10 +389,220 @@
         height: 40vh;
         border-right: none;
         border-bottom: 2px solid #00ff41;
+        padding: 15px;
       }
       
       .network-view {
         height: 60vh;
+      }
+      
+      .keyboard-title {
+        font-size: 20px;
+      }
+      
+      .keyboard-ascii {
+        font-size: 10px;
+      }
+      
+      .zoom-controls {
+        top: 10px;
+        right: 10px;
+      }
+      
+      .zoom-controls button {
+        width: 40px;
+        height: 35px;
+        font-size: 14px;
+      }
+      
+      .network-info, .network-stats {
+        font-size: 11px;
+        padding: 10px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .input-panel {
+        padding: 12px;
+        height: 45vh;
+      }
+      
+      .keyboard-title {
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+      
+      .keyboard-ascii {
+        font-size: 9px;
+        margin-bottom: 15px;
+      }
+      
+      .tab-button {
+        font-size: 11px;
+        padding: 8px;
+      }
+      
+      .input-group label {
+        font-size: 12px;
+      }
+      
+      #ascii-input {
+        font-size: 11px;
+        height: 250px;
+      }
+      
+      button {
+        font-size: 12px;
+        padding: 10px;
+      }
+      
+      .info-text {
+        font-size: 10px;
+      }
+      
+      .network-view {
+        height: 55vh;
+      }
+      
+      .zoom-controls {
+        top: 8px;
+        right: 8px;
+        gap: 6px;
+      }
+      
+      .zoom-controls button {
+        width: 36px;
+        height: 32px;
+        font-size: 12px;
+      }
+      
+      .zoom-indicator {
+        width: 36px;
+        font-size: 10px;
+        padding: 3px 0;
+      }
+      
+      .network-info {
+        top: 5px;
+        left: 5px;
+        padding: 8px;
+        font-size: 10px;
+      }
+      
+      .network-stats {
+        bottom: 10px;
+        left: 10px;
+        padding: 8px;
+        font-size: 10px;
+      }
+      
+      #ascii-display {
+        font-size: 7px;
+        max-height: 250px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .input-panel {
+        padding: 10px;
+        height: 50vh;
+      }
+      
+      .keyboard-title {
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+      
+      .keyboard-ascii {
+        font-size: 8px;
+        margin-bottom: 12px;
+        display: none; /* Hide ASCII art on very small screens to save space */
+      }
+      
+      .tab-container {
+        gap: 3px;
+        margin-bottom: 15px;
+      }
+      
+      .tab-button {
+        font-size: 10px;
+        padding: 6px;
+      }
+      
+      .input-group {
+        margin-bottom: 15px;
+      }
+      
+      .input-group label {
+        font-size: 11px;
+        margin-bottom: 6px;
+      }
+      
+      #ascii-input {
+        font-size: 10px;
+        height: 200px;
+        padding: 8px;
+      }
+      
+      button {
+        font-size: 11px;
+        padding: 8px;
+      }
+      
+      .button-group {
+        gap: 8px;
+        margin-top: 12px;
+      }
+      
+      .info-text {
+        font-size: 9px;
+        margin-top: 12px;
+      }
+      
+      .network-view {
+        height: 50vh;
+      }
+      
+      .zoom-controls button {
+        width: 32px;
+        height: 28px;
+        font-size: 11px;
+      }
+      
+      .zoom-indicator {
+        width: 32px;
+        font-size: 9px;
+      }
+      
+      .network-info, .network-stats {
+        font-size: 9px;
+        padding: 6px;
+      }
+      
+      #ascii-display {
+        font-size: 6px;
+        max-height: 200px;
+        padding: 8px;
+      }
+      
+      #preview-img {
+        max-width: 100%;
+      }
+    }
+    
+    /* Touch-friendly improvements */
+    @media (hover: none) and (pointer: coarse) {
+      button {
+        min-height: 44px; /* Better touch target */
+      }
+      
+      .tab-button {
+        min-height: 40px;
+      }
+      
+      .zoom-controls button {
+        min-width: 44px;
+        min-height: 44px;
       }
     }
     
@@ -923,8 +1133,20 @@ Example:
     
     function windowResized() {
       const networkView = document.querySelector('.network-view');
-      resizeCanvas(networkView.clientWidth, networkView.clientHeight);
+      if (networkView) {
+        resizeCanvas(networkView.clientWidth, networkView.clientHeight);
+      }
     }
+    
+    // Handle orientation change on mobile
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        const networkView = document.querySelector('.network-view');
+        if (networkView && typeof resizeCanvas === 'function') {
+          resizeCanvas(networkView.clientWidth, networkView.clientHeight);
+        }
+      }, 100);
+    });
     
     // Update statistics
     function updateStats() {
